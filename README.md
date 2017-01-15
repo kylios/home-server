@@ -51,4 +51,23 @@ Now to start up the development vm, we just start vagrant:
   (venv) $ vagrant provision
   ```
 
+# Setting up a Raspberry Pi
 
+If you have a raspberry pi, you can use the same `ansible` scripts to deploy the home server applications to it. You'll need to ensure that the ip address, user, and password are correct for your pi. Open the file `ansible/environments/raspberry-pi/groups`. Mine looks like this:
+
+```yaml
+[home-assistant]
+192.168.1.13 ansible_user=pi ansible_ssh_pass=raspberry
+```
+
+Update the ip address, `ansible_user`, and `ansible_ssh_pass` to match your own.
+
+Now simply provision your machine by invoking `ansible-playbook`, like so:
+
+```bash
+(venv) $ ansible-playbook -i ansible/environments/raspberry-pi ansible/playbooks/deploy/server.yml
+```
+
+Once this is complete, you should have a raspberry pi now acting as a home server. Let's do some checks to verify everything is running ok.
+
+- Check that it's running Home Assistant by visiting `<your-rpi-ip>:8123`.
