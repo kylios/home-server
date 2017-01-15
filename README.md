@@ -12,10 +12,12 @@ I deploy to my home server using automated deployment scripts written in [Ansibl
 
 First we need to install some dependencies:
 
-- Install libssl-dev:
+- Install some packages from apt:
   ```bash
-  $ sudo apt-get install libssl-dev
+  $ sudo apt-get install libssl-dev sshpass
   ```
+  - `libssl-dev`: this is needed to compile `cryptography`, which pip will try to do when installing our local python dependencies.
+  - `sshpass`: this is needed to run deployment against a physical raspberry pi, which uses an SSH password.
 
 - Create a virtual environment:
   ```bash
