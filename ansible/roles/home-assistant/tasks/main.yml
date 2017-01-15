@@ -31,8 +31,8 @@
 - name: Install homeassistant in a virtual environment
   pip:
     virtualenv: "{{ homeassistant_venv_dir }}"
-    executable: "pip3"
-    #virtualenv_python: python3
+    #executable: "pip3"
+    virtualenv_python: python3
     name: homeassistant
   become_user: homeassistant
   notify: reload homeassistant
@@ -40,5 +40,5 @@
 - name: Install systemd start script
   template:
     src: homeassistant.service.j2
-    dest: "/etc/systemd/system/homeassistant@{{ homeassistant_user }}.service"
+    dest: "/etc/systemd/system/homeassistant.service"
   notify: reload homeassistant
