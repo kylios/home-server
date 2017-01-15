@@ -1,0 +1,3 @@
+---
+homeassistant_venv_dir: /srv/homeassistant/homeassistant_venv
+homeassistant_user: root

@@ -1,0 +1,8 @@
+---
+- hosts:
+  - home-assistant
+  become: yes
+  pre_tasks:
+    - apt: update_cache=yes cache_valid_time=86400
+  roles:
+    - home-assistant

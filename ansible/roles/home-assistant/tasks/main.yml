@@ -1,0 +1,44 @@
+---
+# Installation instructions taken from
+# https://home-assistant.io/getting-started/installation-raspberry-pi/#manual-installation
+- name: Install python3
+  apt: name={{ item }} state=latest
+  with_items:
+    - python3
+    - python3-venv
+    - python3-pip
+    # This was needed to get the `vitualenv` command, which ansible invokes
+    # below instead of the `python3 -m venv` that the instructions use.
+    - python3-virtualenv
+
+- name: Reinstall virtualenv from pip
+  pip: name=virtualenv state=latest executable=pip3
+
+- name: Create a user for Home Assistant
+  user:
+    name: homeassistant
+    comment: System user for the Home Assistant System
+    system: yes
+    createhome: yes
+
+- name: Ensure Home Assistant directory exists
+  file:
+    name: "{{ homeassistant_venv_dir|dirname }}"
+    state: directory
+    owner: homeassistant
+    group: homeassistant
+
+- name: Install homeassistant in a virtual environment
+  pip:
+    virtualenv: "{{ homeassistant_venv_dir }}"
+    executable: "pip3"
+    #virtualenv_python: python3
+    name: homeassistant
+  become_user: homeassistant
+  notify: reload homeassistant
+
+- name: Install systemd start script
+  template:
+    src: homeassistant.service.j2
+    dest: "/etc/systemd/system/homeassistant@{{ homeassistant_user }}.service"
+  notify: reload homeassistant

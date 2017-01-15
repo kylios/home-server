@@ -1,0 +1,8 @@
+---
+- name: reload homeassistant
+  service:
+    name: homeassistant
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+    #user: yes
