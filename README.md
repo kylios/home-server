@@ -41,9 +41,14 @@ First we need to install some dependencies:
 
 Now to start up the development vm, we just start vagrant:
 
-- Start the virtual machine
+- Start the virtual machine:
   ```bash
-  vagrant up
+  (venv) $ vagrant up
+  ```
+
+  The first time you run `vagrant up`, it will automatically provision the machine, which means invoking `ansible` to install python and Home Assistant. If you make changes to any of the `ansible` files and need to test them by applying them to the virtual machine, you'll need to re-provision the VM, like so:
+  ```bash
+  (venv) $ vagrant provision
   ```
 
 
