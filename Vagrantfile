@@ -3,6 +3,7 @@
 
 Vagrant.configure(2) do |config|
     config.vm.synced_folder ".", "/vagrant", disabled: true
+    config.vm.network :forwarded_port, guest: 8123, host: 8123
 
     config.vm.provider "virtualbox" do |vb, override|
         override.vm.box = "debian/jessie64"
